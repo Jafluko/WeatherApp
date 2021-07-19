@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/cards/cards_weather.dart';
+import 'package:weather_app/cards/card_hourly_weather.dart';
+import 'package:weather_app/cards/card_weather.dart';
 import 'package:weather_app/data/current_weather.dart';
+import 'package:weather_app/data/hourly_weather.dart';
 
 class CardsHourlyWeather extends StatelessWidget {
-  final List<CurrentWeather> hourlyWeather;
+  final List<HourlyWeather> hourlyWeather;
 
   const CardsHourlyWeather(this.hourlyWeather);
 
@@ -16,7 +18,7 @@ class CardsHourlyWeather extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: hourlyWeather.length,
         itemBuilder: (context, i) {
-          return CardsWeather(hourlyWeather[i]);
+          return CardHourlyWeather(hourlyWeather[i]);
         },
       ),
     );

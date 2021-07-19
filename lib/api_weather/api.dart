@@ -2,12 +2,13 @@ import 'dart:convert' as convert;
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/data/current_weather.dart';
+import 'package:weather_app/data/hourly_weather.dart';
 import 'package:weather_app/geo/geo.dart';
 
 class Api {
   static final _apiKey = '64a9d7443852091981c81292c0aef453';
   static final _headUrl = 'http://api.openweathermap.org/data/2.5';
-  static final _sufUrl = '&units=metric&lang=ru';
+  static final _sufUrl = '&units=metric';
 
   static Future<CurrentWeather> getCurrentWeather() async {
     Position position = await Geo.determinePosition();
@@ -28,7 +29,7 @@ class Api {
     }
   }
 
-  static Future<List<CurrentWeather>> getHourlyWeather() async {
+  static Future<List<HourlyWeather>> getHourlyWeather() async {
     Position position = await Geo.determinePosition();
     print('lat: ' + position.latitude.toString());
     print('lon: ' + position.longitude.toString());
@@ -41,9 +42,9 @@ class Api {
 
     if (response.statusCode == 200) {
       final jsonData = convert.jsonDecode(response.body);
-      final List<CurrentWeather> data =
+      final List<HourlyWeather> data =
           (jsonData['list'] as List<dynamic>).map((item) {
-        return CurrentWeather.fromJson(item);
+        return HourlyWeather.fromJson(item);
       }).toList();
       print(data.length);
       return data;
