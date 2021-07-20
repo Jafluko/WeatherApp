@@ -15,12 +15,12 @@ class WeatherLoadInProgress extends WeatherState {}
 
 class WeatherLoadSuccess extends WeatherState {
   final CurrentWeather currentWeather;
-  final List<HourlyWeather> listHourly;
+  final List<HourlyWeather> hourlyWeather;
 
-  const WeatherLoadSuccess(this.currentWeather, this.listHourly);
+  const WeatherLoadSuccess(this.currentWeather, this.hourlyWeather);
 
   @override
-  List<Object> get props => [currentWeather, listHourly];
+  List<Object> get props => [currentWeather, hourlyWeather];
 }
 
 class WeatherLoadFailure extends WeatherState {}

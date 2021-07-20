@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 abstract class WeatherEvent extends Equatable {
-  const WeatherEvent(/*[List props = const []]*/);
+  const WeatherEvent([List props = const []]);
 }
 
-/*class WeatherCurrentPositionRequested extends WeatherEvent {
+class WeatherCurrentPositionRequested extends WeatherEvent {
   const WeatherCurrentPositionRequested() : super();
 
   @override
   List<Object> get props => [];
-}*/
+}
 
 class WeatherRequested extends WeatherEvent {
   final String city;

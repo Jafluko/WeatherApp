@@ -14,7 +14,10 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
+      theme: ThemeData(
+        primaryColorDark: Colors.white,
+        primaryColor: Colors.white,
+      ),
       home: MainView(),
     );
   }
@@ -26,43 +29,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  /*@override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Spacer(),
-            FutureBuilder<CurrentWeather>(
-              future: Api.getCurrentWeather(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return CardWeather(snapshot.data!);
-                } else if (snapshot.hasError){
-                  return Text(snapshot.error.toString());
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-            Spacer(),
-            FutureBuilder<List<HourlyWeather>>(
-              future: Api.getHourlyWeather(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return CardsHourlyWeather(snapshot.data!);
-                } else if (snapshot.hasError){
-                  return Text(snapshot.error.toString());
-                }
-                return CircularProgressIndicator();
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -76,7 +42,14 @@ class _MainViewState extends State<MainView> {
                 backgroundColor: Color.fromRGBO(0, 0, 0, 0),
                 actions: [
                   IconButton(
-                    icon: Icon(Icons.search),
+                    icon: Icon(Icons.my_location),
+                    onPressed: () {
+                      BlocProvider.of<WeatherBloc>(context)
+                          .add(WeatherCurrentPositionRequested());
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.search_outlined),
                     onPressed: () {
                       showSearch(
                           context: context,
@@ -95,23 +68,51 @@ class _MainViewState extends State<MainView> {
                     Text(
                       '${state.currentWeather.name}',
                       style: TextStyle(
-                          fontSize: 32.0, fontWeight: FontWeight.bold),
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       '${state.currentWeather.description}',
                       style: TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.bold),
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Spacer(),
                     CardWeather(state.currentWeather),
                     Spacer(),
-                    CardsHourlyWeather(state.listHourly),
+                    CardsHourlyWeather(state.hourlyWeather),
                   ],
                 ),
               ),
             );
           }
           return Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Color.fromRGBO(0, 0, 0, 0),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.my_location),
+                  onPressed: () {
+                    BlocProvider.of<WeatherBloc>(context)
+                        .add(WeatherCurrentPositionRequested());
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.search_outlined),
+                  onPressed: () {
+                    showSearch(
+                        context: context,
+                        delegate: MySearchDelegate((query) {
+                          BlocProvider.of<WeatherBloc>(context)
+                              .add(WeatherRequested(city: query));
+                        }));
+                  },
+                ),
+              ],
+            ),
             body: Center(
               child: CircularProgressIndicator(),
             ),

@@ -1,24 +1,17 @@
 import 'dart:convert' as convert;
-import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/data/current_weather.dart';
 import 'package:weather_app/data/hourly_weather.dart';
-import 'package:weather_app/geo/geo.dart';
 
 class Api {
   static final _apiKey = '64a9d7443852091981c81292c0aef453';
   static final _headUrl = 'http://api.openweathermap.org/data/2.5';
   static final _sufUrl = '&units=metric';
 
-  static Future<CurrentWeather> getCurrentWeather() async {
-    Position position = await Geo.determinePosition();
-    print('lat: ' + position.latitude.toString());
-    print('lon: ' + position.longitude.toString());
+  static Future<CurrentWeather> getCurrentWeather({String query = '', String lat = '', String lon = ''}) async {
     var url = _headUrl +
-        '/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey' +
+        '/weather?q=$query&lat=$lat&lon=$lon&appid=$_apiKey' +
         _sufUrl;
-    //var url = _headUrl + 'lat=54.35&lon=52.52&appid=$_apiKey';
-    //var url = _headUrl + 'q=London&appid=$_apiKey';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -29,13 +22,9 @@ class Api {
     }
   }
 
-  static Future<List<HourlyWeather>> getHourlyWeather() async {
-    Position position = await Geo.determinePosition();
-    print('lat: ' + position.latitude.toString());
-    print('lon: ' + position.longitude.toString());
-
+  static Future<List<HourlyWeather>> getHourlyWeather({String query = '', String lat = '', String lon = ''}) async {
     var url = _headUrl +
-        '/forecast?lat=${position.latitude}&lon=${position.longitude}&appid=$_apiKey' +
+        '/forecast?q=$query&lat=$lat&lon=$lon&appid=$_apiKey' +
         _sufUrl;
 
     final response = await http.post(Uri.parse(url));
