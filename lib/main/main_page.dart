@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/api_weather/api.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/cards/card_weather.dart';
@@ -11,6 +12,8 @@ import 'package:weather_app/events/weather_event.dart';
 import 'package:weather_app/states/weather_state.dart';
 
 class MainPage extends StatelessWidget {
+
+  MainPage();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +27,7 @@ class MainPage extends StatelessWidget {
 }
 
 class MainView extends StatefulWidget {
+  MainView();
   @override
   State<StatefulWidget> createState() => _MainViewState();
 }
