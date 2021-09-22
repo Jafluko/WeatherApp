@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/api_weather/api.dart';
 import 'package:weather_app/bloc/weather_bloc.dart';
 import 'package:weather_app/cards/card_weather.dart';
 import 'package:weather_app/cards/cards_hourly_weather.dart';
-import 'package:weather_app/data/current_weather.dart';
-import 'package:weather_app/data/hourly_weather.dart';
 import 'package:weather_app/delegates/search_delegate.dart';
 import 'package:weather_app/events/weather_event.dart';
 import 'package:weather_app/states/weather_state.dart';
@@ -86,7 +82,7 @@ class _MainViewState extends State<MainView> {
                     Spacer(),
                     CardWeather(state.currentWeather),
                     Spacer(),
-                    CardsHourlyWeather(state.hourlyWeather),
+                    CardsHourlyWeather(state.hourlyWeather, state.numbers),
                   ],
                 ),
               ),

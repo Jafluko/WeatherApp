@@ -9,9 +9,24 @@ class CardHourlyWeather extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 80.0,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Center(
+        padding: _hourlyWeather.position == ""
+            ? EdgeInsets.only(bottom: 16.0)
+            : _hourlyWeather.position == "L"
+                ? EdgeInsets.only(left: 16.0, bottom: 16)
+                : _hourlyWeather.position == "R"
+                    ? EdgeInsets.only(right: 16.0, bottom: 16)
+                    : EdgeInsets.only(bottom: 16.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: _hourlyWeather.position == "L"
+                ? BorderRadius.only(bottomLeft: Radius.circular(10))
+                : _hourlyWeather.position == "R"
+                    ? BorderRadius.only(bottomRight: Radius.circular(10))
+                    : null,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

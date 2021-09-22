@@ -1,8 +1,9 @@
 class HourlyWeather {
-  final int temperature;
-  final String iconCode;
-  final String description;
-  final DateTime time;
+  int temperature;
+  String iconCode;
+  String description;
+  DateTime time;
+  String position = "";
 
   HourlyWeather({
     required this.temperature,
